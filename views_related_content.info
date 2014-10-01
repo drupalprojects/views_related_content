@@ -6,10 +6,3 @@ package = "Views"
 files[] = views/views_related_content_handler_filter_author.inc
 files[] = views/views_related_content_handler_filter_content_type.inc
 files[] = views/views_related_content_handler_filter_term.inc
-
-; Information added by drupal.org packaging script on 2014-09-08
-version = "7.x-2.3"
-core = "7.x"
-project = "views_related_content"
-datestamp = "1452857399"
-
