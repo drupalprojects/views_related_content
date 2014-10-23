@@ -6,7 +6,7 @@
  * @ingroup views_filter_handlers
  *
  */
-class views_related_content_handler_filter_content_type extends views_handler {
+class related_node_handler_filter_content_type extends views_handler {
 
   function options_validate(&$form, &$form_state) {
   }

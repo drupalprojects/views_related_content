@@ -114,5 +114,6 @@ function views_related_content_views_query_alter(&$view, &$query) {
         $query->add_where(1, 'node.nid', $curNode->nid, '<>');
       }
     }
+  } else {
   }
 }
