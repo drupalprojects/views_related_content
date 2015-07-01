@@ -6,6 +6,7 @@ package = "Views"
 files[] = views/views_related_content_handler_filter_author.inc
 files[] = views/views_related_content_handler_filter_content_type.inc
 files[] = views/views_related_content_handler_filter_term.inc
+files[] = views/views_related_content_handler_filter_field_reference.inc
 
 ; Information added by Drupal.org packaging script on 2014-10-01
 version = "7.x-1.0-beta1"

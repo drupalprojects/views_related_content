@@ -1,6 +1,6 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the related_node module.
+ * Install, update and uninstall functions for the views_related_content module.
  *
  */

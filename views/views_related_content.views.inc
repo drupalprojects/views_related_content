@@ -31,6 +31,15 @@ function views_related_content_views_data_alter(&$data) {
       'handler' => 'views_related_content_handler_filter_term',
     ),
   );
+
+  $data['node']['related_field_reference'] = array(
+    'title' => t('Field Reference'),
+    'group' => t('Related Content'),
+    'help' => t('You are related by Entity (Field Reference)'),
+    'filter' => array(
+      'handler' => 'views_related_content_handler_filter_field_reference',
+    ),
+  );
 }
 
 /**
@@ -88,7 +97,6 @@ function views_related_content_views_query_alter(&$view, &$query) {
       foreach ($curNode as $key => $value) {
         if (isset($value['und'][0]['taxonomy_term'])) {
           $curNodeTaxonomy[$key] = array();
-          # Ket the list of terms
           foreach ($value['und'] as $key_item => $value_item) {
             $curNodeTaxonomy[$key][] = $value_item['taxonomy_term']->name;
           }
@@ -105,6 +113,7 @@ function views_related_content_views_query_alter(&$view, &$query) {
           }
           # Set conditon type where
           $query->where[$count_where]['type'] = 'OR';
+          $count_where++;
         }
       }
 
@@ -114,6 +123,28 @@ function views_related_content_views_query_alter(&$view, &$query) {
         $query->add_where(1, 'node.nid', $curNode->nid, '<>');
       }
     }
-  } else {
+
+    if (isset($view->display_handler->handlers['filter']['related_field_reference']->value) && isset($curNode)) {
+      $listFieldReference = $view->display_handler->handlers['filter']['related_field_reference']->value;
+
+      # List node entity reference of field
+      $list_ref_cur_node = array();
+      foreach ($listFieldReference as $key => $value) {
+        if (isset($curNode->{$value}['und'])) {
+          foreach ($curNode->{$value}['und'] as $key_node => $value_node) {
+            $list_ref_cur_node[$value][] = $value_node['target_id'];
+          }
+        }
+      }
+
+      foreach ($listFieldReference as $key => $value) {
+        $count_where++;
+        $query->add_where($count_where, 'field_data_' . $key . '.' . $key . '_target_id', $list_ref_cur_node[$value], 'IN');
+        $query->where[$count_where]['type'] = 'OR';
+      }
+
+     
+    }
   }
 }
+
